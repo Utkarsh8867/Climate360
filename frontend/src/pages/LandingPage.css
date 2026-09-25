@@ -1,0 +1,16 @@
+.landing-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Global section styling */
+section {
+  scroll-behavior: smooth;
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}

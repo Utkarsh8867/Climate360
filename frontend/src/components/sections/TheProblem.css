@@ -1,0 +1,176 @@
+.the-problem {
+  padding: var(--spacing-3xl) var(--spacing-md);
+  background: var(--white);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.section-header h2 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.section-header .tagline {
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.intro-text {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.problem-item {
+  background: var(--surface-secondary);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  border-left: 4px solid var(--primary);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+}
+
+.problem-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.problem-icon {
+  color: var(--primary);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+}
+
+.problem-item p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.problem-callout {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.problem-callout p {
+  font-size: 1.25rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.our-approach {
+  background: var(--surface-secondary);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+}
+
+.our-approach h3 {
+  font-size: 1.75rem;
+  color: var(--text);
+  margin: 0 0 var(--spacing-md) 0;
+  text-align: center;
+}
+
+.approach-text {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.approach-flow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.step {
+  background: var(--white);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border);
+}
+
+.step:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.step.highlight {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.arrow {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .the-problem {
+    padding: var(--spacing-2xl) var(--spacing-md);
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+  }
+
+  .problems-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .our-approach {
+    padding: var(--spacing-lg);
+  }
+
+  .approach-flow {
+    gap: var(--spacing-sm);
+  }
+
+  .step {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.8rem;
+  }
+}
