@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     conduit_api_url: str = os.getenv("CONDUIT_API_URL", "https://conduit.jhubafrica.com/data.php")
     
     # Database
-    database_url: str = os.getenv("DATABASE_URL", "postgresql://climate360:climate360pass@localhost:5432/climate360")
+    database_url: str = os.getenv("DATABASE_URL", "postgresql://neondb_owner:npg_1HnGZS5VTkCd@ep-dawn-frog-b4g99sii-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require")
     
     # Backend
     backend_host: str = os.getenv("BACKEND_HOST", "0.0.0.0")
