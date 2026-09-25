@@ -1,41 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import modernEnvIoT from '../modern_environmental_iot_weather_monitoring_station_in_an_african_agricultural.png';
 import stunningAerial from '../stunning_aerial_landscape_of_modern_smart_agriculture_fields_solar_weather.png';
 
 function LandingPageNew({ onNavigate }) {
-  const [chatMessages, setChatMessages] = useState([
-    {
-      type: 'user',
-      text: 'Can outdoor sports continue at JKUAT Primary this afternoon?'
-    },
-    {
-      type: 'assistant',
-      text: 'ADVISORY: OUTDOOR ACTIVITY UNSAFE\n\nCurrent WBGT is 32.8°C with 780 W/m² solar irradiance. The Risk Engine recommends shifting sports activities indoors or rescheduling past 16:30 to avoid heat exhaustion in children.'
-    }
-  ]);
-  const [chatInput, setChatInput] = useState('');
 
-  const fillPrompt = (text) => {
-    setChatInput(text);
-  };
-
-  const submitPrompt = () => {
-    if (!chatInput.trim()) return;
-
-    setChatMessages(prev => [...prev, {
-      type: 'user',
-      text: chatInput
-    }]);
-    setChatInput('');
-
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, {
-        type: 'assistant',
-        text: 'Based on current telemetry analysis from JKUAT Conduit@Empathy sensors, field conditions indicate optimal harvesting window. Soil saturation at 64% capacity. Proceed with caution.'
-      }]);
-    }, 600);
-  };
 
   return (
     <div className="w-full bg-surface">
@@ -84,7 +53,7 @@ function LandingPageNew({ onNavigate }) {
                   </a>
                   <a href="#how-it-works" className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-label-lg text-label-lg text-secondary bg-surface-container-lowest shadow-sm hover:bg-surface-container-low transition-all">
                     <span className="material-symbols-outlined text-[18px]">sensors</span>
-                    <span>View Architecture</span>
+                    <span>How It Works</span>
                   </a>
                   <a href="#ai-assistant" className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-label-lg text-label-lg text-on-tertiary-fixed-variant bg-tertiary-fixed/40 hover:bg-tertiary-fixed/60 shadow-sm transition-all">
                     <span className="material-symbols-outlined text-[18px]">smart_toy</span>
@@ -553,92 +522,6 @@ function LandingPageNew({ onNavigate }) {
                   </div>
                 </div>
               ))}
-            </div>
-          </section>
-
-          {/* AI ASSISTANT SECTION */}
-          <section id="ai-assistant" className="max-w-[1280px] mx-auto px-margin py-16 w-full">
-            <div className="rounded-3xl bg-gradient-to-br from-primary via-primary-container to-secondary p-8 sm:p-12 text-on-primary shadow-2xl relative overflow-hidden">
-              <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-tertiary-fixed/20 blur-3xl pointer-events-none"></div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                <div className="lg:col-span-6 space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-lowest/15 backdrop-blur-md text-xs font-label-md text-on-primary">
-                    <span className="w-2 h-2 rounded-full bg-tertiary-fixed animate-ping"></span>
-                    <span>Llama-3 70B Powered via Groq</span>
-                  </div>
-                  <h2 className="font-headline-lg text-headline-lg font-bold">Ask the Climate360 Copilot Anything</h2>
-                  <p className="font-body-md text-body-md text-on-primary/80 max-w-lg">
-                    Test queries with our real-time reasoning model. The Copilot fuses hyper-local telemetry with agronomy research to generate immediate advice.
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    <button
-                      onClick={() => fillPrompt('Can farm workers safely harvest in Juja today?')}
-                      className="px-3 py-1.5 rounded-lg bg-surface-container-lowest/10 hover:bg-surface-container-lowest/20 backdrop-blur-md text-xs font-label-md transition-colors"
-                    >
-                      "Can workers safely harvest in Juja today?"
-                    </button>
-                    <button
-                      onClick={() => fillPrompt('Should I harvest rainwater before 6 PM?')}
-                      className="px-3 py-1.5 rounded-lg bg-surface-container-lowest/10 hover:bg-surface-container-lowest/20 backdrop-blur-md text-xs font-label-md transition-colors"
-                    >
-                      "Should I harvest rainwater before 6 PM?"
-                    </button>
-                    <button
-                      onClick={() => fillPrompt('What is the extreme heat risk for primary school athletics?')}
-                      className="px-3 py-1.5 rounded-lg bg-surface-container-lowest/10 hover:bg-surface-container-lowest/20 backdrop-blur-md text-xs font-label-md transition-colors"
-                    >
-                      "Heat risk for school athletics?"
-                    </button>
-                  </div>
-                </div>
-
-                {/* Chat Simulator */}
-                <div className="lg:col-span-6">
-                  <div className="p-6 rounded-2xl bg-surface-container-lowest text-on-surface shadow-xl space-y-4">
-                    <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
-                      {chatMessages.map((msg, idx) => (
-                        <div key={idx} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`max-w-[85%] px-4 py-2.5 rounded-2xl ${msg.type === 'user' ? 'rounded-tr-sm bg-primary text-on-primary' : 'rounded-tl-sm bg-surface-container text-on-surface'} font-body-sm text-body-sm shadow-sm whitespace-pre-wrap`}>
-                            {msg.type === 'assistant' && msg.text.includes('ADVISORY') ? (
-                              <div className="space-y-2">
-                                <div className="flex items-center gap-1.5 text-error font-bold font-label-sm text-xs">
-                                  <span className="material-symbols-outlined text-[16px]">warning</span>
-                                  <span>ADVISORY: OUTDOOR ACTIVITY UNSAFE</span>
-                                </div>
-                                <p>{msg.text.split('\n').slice(2).join('\n')}</p>
-                              </div>
-                            ) : (
-                              msg.text
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-2 pt-2">
-                      <input
-                        type="text"
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            submitPrompt();
-                          }
-                        }}
-                        placeholder="Ask about crops, heat risks, rainfall..."
-                        className="flex-1 px-4 py-2.5 rounded-xl bg-surface-container-low text-on-surface placeholder:text-on-surface-variant/60 font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                      />
-                      <button
-                        onClick={submitPrompt}
-                        className="p-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary-container transition-colors flex items-center justify-center"
-                      >
-                        <span className="material-symbols-outlined text-[20px]">send</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
 

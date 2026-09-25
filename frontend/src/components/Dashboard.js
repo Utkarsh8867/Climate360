@@ -39,8 +39,8 @@ function Dashboard({ data, onReset }) {
     setIsExporting(true);
     setTimeout(() => {
       setIsExporting(false);
-      alert('Intelligence Report successfully generated and downloaded!');
-    }, 1200);
+      window.print();
+    }, 800);
   };
 
   return (

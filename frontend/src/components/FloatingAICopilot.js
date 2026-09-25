@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 function FloatingAICopilot({ dashboardData }) {
   const [isOpen, setIsOpen] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
   const [chatMessages, setChatMessages] = useState([
     {
       type: 'assistant',
@@ -23,6 +28,10 @@ function FloatingAICopilot({ dashboardData }) {
   const handleSuggestedPrompt = (prompt) => {
     setChatInput(prompt.split(' ').slice(1).join(' '));
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages, isOpen]);
 
   // Voice input function
   const startVoiceInput = () => {
@@ -183,6 +192,7 @@ function FloatingAICopilot({ dashboardData }) {
                   </div>
                 </div>
               ))}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input */}
