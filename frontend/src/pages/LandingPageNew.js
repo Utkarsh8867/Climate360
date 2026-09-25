@@ -114,6 +114,25 @@ function LandingPageNew({ onNavigate }) {
                   </div>
                 </div>
 
+                {/* Emotional Impact SMS Overlay */}
+                <div className="absolute bottom-28 right-6 md:bottom-32 md:right-10 max-w-[280px] pointer-events-auto transform transition-transform hover:scale-105 duration-300">
+                  <div className="p-3.5 rounded-2xl rounded-br-sm bg-surface-container-lowest/95 backdrop-blur-md shadow-2xl border border-outline-variant/20 flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-secondary">
+                        <span className="material-symbols-outlined text-[16px]">sms</span>
+                        <span className="font-label-sm text-[10px] uppercase font-bold tracking-wider">SMS Dispatch</span>
+                      </div>
+                      <span className="font-label-sm text-[10px] text-on-surface-variant">Just now</span>
+                    </div>
+                    <p className="font-body-sm text-[12px] text-on-surface leading-snug">
+                      "Warning received. We delayed planting today and saved our seeds from the flash flood. Thank you."
+                    </p>
+                    <p className="font-label-sm text-[10px] text-on-surface-variant font-medium italic mt-1">
+                      — Joseph N., Local Farmer (Juja)
+                    </p>
+                  </div>
+                </div>
+
                 {/* Bottom Bar */}
                 <div className="p-6 md:p-8 bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="flex items-center gap-4">
