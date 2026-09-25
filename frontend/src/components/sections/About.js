@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cloud, Zap, Droplets, Wind, ShieldAlert, Activity, BarChart3, Database } from 'lucide-react';
+import { Cloud, ShieldAlert, Activity, BarChart3, Database } from 'lucide-react';
 
 function About() {
   return (
