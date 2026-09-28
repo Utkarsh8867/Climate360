@@ -137,7 +137,8 @@ class WaterRiskEngine:
         historical_avg_rainfall: float,
         forecast_rainfall: float = None,
         current_storage: float = 0,
-        daily_demand: float = 100  # liters per day
+        daily_demand: float = 100,  # liters per day
+        soil_moisture: float = 50
     ) -> Tuple[str, Dict[str, Any]]:
         """
         Assess water stress level
@@ -154,6 +155,14 @@ class WaterRiskEngine:
             stress_score += 2
         elif recent_rainfall > historical_avg_rainfall * 1.2:
             stress_score -= 1  # Good rainfall
+            
+        # Check soil moisture
+        if soil_moisture < 30:
+            stress_score += 3
+        elif soil_moisture < 50:
+            stress_score += 1
+        elif soil_moisture > 70:
+            stress_score -= 1
         
         # Check current storage adequacy
         days_of_supply = current_storage / daily_demand if daily_demand > 0 else 0
@@ -174,11 +183,11 @@ class WaterRiskEngine:
         # Determine stress level
         stress_score = max(0, stress_score)  # Don't go below 0
         
-        if stress_score >= 6:
+        if stress_score >= 8:
             stress_level = "CRITICAL"
-        elif stress_score >= 4:
+        elif stress_score >= 5:
             stress_level = "HIGH"
-        elif stress_score >= 2:
+        elif stress_score >= 3:
             stress_level = "MODERATE"
         else:
             stress_level = "LOW"
@@ -189,6 +198,7 @@ class WaterRiskEngine:
             "forecast_rainfall": forecast_rainfall,
             "current_storage": current_storage,
             "daily_demand": daily_demand,
+            "soil_moisture": soil_moisture,
             "days_of_supply": round(days_of_supply, 1),
             "stress_score": stress_score,
             "stress_factors": []
@@ -197,6 +207,10 @@ class WaterRiskEngine:
         # Identify factors
         if recent_rainfall < historical_avg_rainfall * 0.5:
             details["stress_factors"].append("Rainfall significantly below historical average")
+        if soil_moisture < 30:
+            details["stress_factors"].append("Critically low soil moisture levels")
+        elif soil_moisture < 50:
+            details["stress_factors"].append("Low soil moisture levels")
         if days_of_supply < 3:
             details["stress_factors"].append("Storage will be depleted within 3 days")
         if forecast_rainfall is not None and forecast_rainfall < 5:

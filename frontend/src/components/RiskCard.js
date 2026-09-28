@@ -49,15 +49,43 @@ function RiskCard({ title, emoji, riskLevel, explanation, details, isWater }) {
         </div>
       </div>
 
-      <div className="risk-explanation">
-        <p>{explanation}</p>
+      <div className="risk-explanation space-y-4 text-left">
+        {typeof explanation === 'object' && explanation !== null ? (
+          <>
+            <div className="explanation-section">
+              <h4 className="font-bold text-sm text-primary uppercase tracking-wider mb-1 flex items-center gap-2">
+                <span className="material-symbols-outlined text-[16px]">help</span>
+                Why is this risk?
+              </h4>
+              <p className="text-on-surface-variant text-sm">{explanation.why}</p>
+            </div>
+            
+            <div className="explanation-section">
+              <h4 className="font-bold text-sm text-error uppercase tracking-wider mb-1 flex items-center gap-2">
+                <span className="material-symbols-outlined text-[16px]">warning</span>
+                What may happen?
+              </h4>
+              <p className="text-on-surface-variant text-sm">{explanation.what_may_happen}</p>
+            </div>
+            
+            <div className="explanation-section">
+              <h4 className="font-bold text-sm text-secondary uppercase tracking-wider mb-1 flex items-center gap-2">
+                <span className="material-symbols-outlined text-[16px]">task_alt</span>
+                What should I do?
+              </h4>
+              <p className="text-on-surface-variant text-sm font-medium">{explanation.what_should_i_do}</p>
+            </div>
+          </>
+        ) : (
+          <p>{explanation}</p>
+        )}
       </div>
 
       <button
-        className="expand-btn"
+        className="expand-btn mt-4"
         onClick={() => setExpanded(!expanded)}
       >
-        <span>Details</span>
+        <span>Data & Evidence</span>
         <ChevronDown size={18} className={expanded ? 'rotated' : ''} />
       </button>
 
@@ -111,6 +139,14 @@ function RiskCard({ title, emoji, riskLevel, explanation, details, isWater }) {
               </ul>
             </div>
           )}
+          
+          <div className="mt-4 pt-3 border-t border-surface-container-high text-xs text-on-surface-variant flex items-center justify-between">
+            <span className="flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">verified</span>
+              Evidence Source:
+            </span>
+            <span className="font-mono font-bold">Conduit@Empathy</span>
+          </div>
         </div>
       )}
     </div>

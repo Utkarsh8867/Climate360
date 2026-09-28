@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import RiskCard from './RiskCard';
 import CurrentConditions from './CurrentConditions';
+import WhatIfSimulator from './WhatIfSimulator';
 import { RotateCcw } from 'lucide-react';
 
-function Dashboard({ data, onReset }) {
+function Dashboard({ data: initialData, onReset }) {
+  const [data, setData] = useState(initialData);
+  const [activeTab, setActiveTab] = useState('live'); // 'live' or 'simulator'
+
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
+
+  const handleSimulationComplete = (simulatedData) => {
+    setData(simulatedData);
+  };
   const [isDispatching, setIsDispatching] = React.useState(false);
   const [dispatchSuccess, setDispatchSuccess] = React.useState(false);
   const [isExporting, setIsExporting] = React.useState(false);
@@ -48,11 +59,30 @@ function Dashboard({ data, onReset }) {
       <div className="max-w-[1280px] mx-auto px-margin">
         <div className="rounded-3xl bg-surface-container-lowest shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-primary to-primary-container text-on-primary p-8 sm:p-12">
-            <h2 className="font-headline-lg text-headline-lg font-bold mb-2">Risk Assessment Results</h2>
-            <p className="font-body-lg text-body-lg text-on-primary/80">
-              Analysis based on your provided climate metrics
-            </p>
+          <div className="bg-gradient-to-r from-primary to-primary-container text-on-primary p-8 sm:p-12 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h2 className="font-headline-lg text-headline-lg font-bold mb-2">
+                {activeTab === 'live' ? 'Live Risk Assessment' : 'Simulation Mode'}
+              </h2>
+              <p className="font-body-lg text-body-lg text-on-primary/80">
+                {activeTab === 'live' ? 'Analysis based on ground-truth telemetry' : 'Exploring hypothetical climate scenarios'}
+              </p>
+            </div>
+            
+            <div className="flex bg-surface-container-lowest/20 p-1 rounded-xl">
+              <button 
+                onClick={() => setActiveTab('live')}
+                className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${activeTab === 'live' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-primary hover:bg-surface-container-lowest/10'}`}
+              >
+                Live Intel
+              </button>
+              <button 
+                onClick={() => setActiveTab('simulator')}
+                className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors ${activeTab === 'simulator' ? 'bg-surface-container-lowest text-primary shadow-sm' : 'text-on-primary hover:bg-surface-container-lowest/10'}`}
+              >
+                What-If Simulator
+              </button>
+            </div>
           </div>
 
           <div className="p-8 sm:p-12 space-y-12">
@@ -107,6 +137,75 @@ function Dashboard({ data, onReset }) {
                 </div>
               </div>
             </div>
+
+            {/* Simulator Injection */}
+            {activeTab === 'simulator' && (
+              <div>
+                <WhatIfSimulator currentData={data} onSimulationComplete={handleSimulationComplete} />
+              </div>
+            )}
+
+            {/* Data Quality & Trust Panel */}
+            {activeTab === 'live' && (
+            <div>
+              <h3 className="font-headline-md text-headline-md text-on-surface font-bold mb-6 flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary">verified_user</span>
+                Conduit Data Trust
+              </h3>
+              <div className="bg-surface-container-low rounded-2xl p-6 border border-primary/20">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="flex-shrink-0 relative w-32 h-32 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90">
+                      <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="8" fill="none" className="text-surface-container-highest" />
+                      <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="8" fill="none" strokeDasharray="351.8" strokeDashoffset="21.1" className="text-primary" />
+                    </svg>
+                    <div className="absolute flex flex-col items-center">
+                      <span className="text-2xl font-bold text-on-surface">94%</span>
+                      <span className="text-xs text-on-surface-variant font-medium uppercase tracking-wider">Confidence</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-4">
+                    <div>
+                      <div className="text-xs text-on-surface-variant mb-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">sensors</span>
+                        Sensors Used
+                      </div>
+                      <div className="font-bold text-on-surface">Temp, Hum, Soil, Rain, UV</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-on-surface-variant mb-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">check_circle</span>
+                        Data Available
+                      </div>
+                      <div className="font-bold text-on-surface text-primary">100% (7/7 params)</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-on-surface-variant mb-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">update</span>
+                        Last Updated
+                      </div>
+                      <div className="font-bold text-on-surface">Just now</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-on-surface-variant mb-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">warning</span>
+                        Missing Readings
+                      </div>
+                      <div className="font-bold text-on-surface text-success">0 (Nominal)</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-on-surface-variant mb-1 flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[14px]">rule</span>
+                        Invalid/Outlier
+                      </div>
+                      <div className="font-bold text-on-surface text-success">0 Detected</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            )}
 
             {/* Quick Summary */}
             <div>

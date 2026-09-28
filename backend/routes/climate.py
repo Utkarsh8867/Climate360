@@ -245,11 +245,10 @@ async def get_dashboard_data(
             temperature, humidity, wind, solar_radiation, wbgt_value
         )
         water_level, water_details = WaterRiskEngine.assess_water_stress(
-            recent_rainfall, historical_avg_rainfall, None, current_storage, 100
+            recent_rainfall, historical_avg_rainfall, None, current_storage, 100, soil_moisture
         )
         water_harvesting = WaterRiskEngine.calculate_rainwater_potential(recent_rainfall, 100)
         water_details["harvesting_potential"] = water_harvesting
-        water_details["soil_moisture"] = soil_moisture
         
         rain_level, rain_details = RainRiskEngine.detect_anomaly(
             rainfall, rainfall_intensity, historical_baseline_rain
